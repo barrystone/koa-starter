@@ -24,15 +24,23 @@ render(app, {
   debug: false
 });
 
-// index
-router.get('/', async (ctx) => {
+// Routes
+router.get('/', index);
+router.get('/add', showAdd);
+
+// List of things
+async function index(ctx: Context) {
   await ctx.render('index', {
     title: 'Things I Love:',
     things: things
   });
-});
+}
+// Show add page
+async function showAdd(ctx: Context) {
+  await ctx.render('add');
+}
 
-router.get('/test', (ctx) => (ctx.body = 'test'));
+router.get('/test', (ctx: Context) => (ctx.body = 'test'));
 // Router Middleware
 app.use(router.routes()).use(router.allowedMethods());
 
