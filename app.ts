@@ -53,7 +53,16 @@ async function add(ctx: Context) {
   ctx.redirect('/');
 }
 
-router.get('/user', (ctx: Context) => (ctx.body = `welcome ${ctx.user}!`));
+router.get(
+  '/user',
+  (ctx: Context) =>
+    (ctx.body = `welcome ${ctx.user}!,  you can add your ID in URL params like: (/:id)`)
+);
+router.get(
+  '/user/:id',
+  (ctx: Context) =>
+    (ctx.body = `welcome ${ctx.user}! your ID is ${ctx.params.id}`)
+);
 // Router Middleware
 app.use(router.routes()).use(router.allowedMethods());
 
