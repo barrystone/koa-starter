@@ -3,6 +3,7 @@ import koaRouter from 'koa-router';
 import json from 'koa-json';
 import path from 'path';
 import render from 'koa-ejs';
+import bodyParser from 'koa-bodyparser';
 
 const app = new koa();
 const router = new koaRouter();
@@ -12,6 +13,8 @@ const things = ['Programming', 'Sport', 'Music'];
 
 // Json prettier middleware
 app.use(json());
+// Body middleware
+app.use(bodyParser());
 
 // Simple middleware example
 // app.use(async (ctx: Context) => (ctx.body = { msg: 'Hello World' }));
@@ -27,6 +30,7 @@ render(app, {
 // Routes
 router.get('/', index);
 router.get('/add', showAdd);
+router.post('/add', add);
 
 // List of things
 async function index(ctx: Context) {
@@ -38,6 +42,12 @@ async function index(ctx: Context) {
 // Show add page
 async function showAdd(ctx: Context) {
   await ctx.render('add');
+}
+// Add thing
+async function add(ctx: Context) {
+  const body: any = ctx.request.body;
+  things.push(body.thing);
+  ctx.redirect('/');
 }
 
 router.get('/test', (ctx: Context) => (ctx.body = 'test'));
