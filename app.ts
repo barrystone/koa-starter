@@ -16,6 +16,9 @@ app.use(json());
 // Body middleware
 app.use(bodyParser());
 
+// Add additional properties to context
+app.context.user = 'barry';
+
 // Simple middleware example
 // app.use(async (ctx: Context) => (ctx.body = { msg: 'Hello World' }));
 
@@ -50,7 +53,7 @@ async function add(ctx: Context) {
   ctx.redirect('/');
 }
 
-router.get('/test', (ctx: Context) => (ctx.body = 'test'));
+router.get('/user', (ctx: Context) => (ctx.body = `welcome ${ctx.user}!`));
 // Router Middleware
 app.use(router.routes()).use(router.allowedMethods());
 
